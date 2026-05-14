@@ -187,16 +187,33 @@
             transform: translateY(2px);
             box-shadow: 0 2px 3px rgba(0,0,0,0.1);
         }
+        /* Estilo da Mascote (Antônia) */
+        .mascote-container {
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: -15px; /* Esse valor negativo faz ela "apoiar" na barra */
+            position: relative;
+            z-index: 110; /* Garante que ela fique por cima da barra de progresso */
+        }
+
+        .mascote-img {
+            width: 140px; /* Tamanho ajustado para ficar delicado */
+            height: auto;
+            display: inline-block;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <header>
+     <header>
         <h1>Treinamento Operacional</h1>
         <p>Assistência 24h Veicular</p>
     </header>
 
+    <div class="mascote-container">
+        <img src="imagem-antonia.png" alt="Mascote Antônia" class="mascote-img">
+    </div>
     <div class="progress-container">
         <div class="progress-text">Progresso do Treinamento: <span id="percent">0%</span></div>
         <div class="progress-bar">
