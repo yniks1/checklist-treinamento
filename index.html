@@ -160,6 +160,33 @@
             color: var(--verde-escuro);
             font-weight: bold;
         }
+        /* Estilo do Botão de Reiniciar */
+        .btn-reiniciar {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 30px auto 10px auto;
+            padding: 15px 20px;
+            background-color: var(--laranja-destaque);
+            color: var(--branco);
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            text-transform: uppercase;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-reiniciar:hover {
+            background-color: #e65c10; /* Tom mais escuro para o hover */
+        }
+
+        .btn-reiniciar:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -247,6 +274,7 @@
             <div class="item-lista"><input type="checkbox" id="item41"><label for="item41">Cancelamento de serviços</label></div>
             <div class="item-lista"><input type="checkbox" id="item42"><label for="item42">Equipamento: Patins e Carro de apoio</label></div>
             <div class="item-lista"><input type="checkbox" id="item43"><label for="item43">Tipos: Asa Delta, Plataforma, Lança e Munck</label></div>
+            <button id="btn-reiniciar" class="btn-reiniciar">Zerar Treinamento</button>
         </div>
     </div>
 
@@ -280,6 +308,23 @@
             localStorage.setItem('assistencia-item-' + index, checkbox.checked);
             updateProgress();
         });
+    });
+    // Função para o botão de reiniciar
+    const btnReiniciar = document.getElementById('btn-reiniciar');
+    
+    btnReiniciar.addEventListener('click', () => {
+        const confirmacao = confirm("Tem certeza que deseja zerar todo o checklist do treinamento?");
+        
+        if (confirmacao) {
+            checkboxes.forEach((checkbox, index) => {
+                checkbox.checked = false; // Desmarca visualmente
+                localStorage.setItem('assistencia-item-' + index, 'false'); // Limpa da memória do navegador
+            });
+            updateProgress(); // Atualiza a barra para 0%
+            
+            // Joga a tela suavemente para cima
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     });
 
     // Inicializar progresso na carga da página
