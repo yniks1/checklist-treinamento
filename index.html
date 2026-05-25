@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #cce2fc; /* Azul claro restaurado */
+            background-color: #cce2fc;
             color: var(--cinza-texto);
             margin: 0;
             padding: 20px;
@@ -135,7 +135,7 @@
             position: sticky;
             top: 0;
             background: white;
-            padding: 10px 20px;
+            padding: 15px 20px;
             border-bottom: 1px solid var(--cinza-borda);
             z-index: 100;
         }
@@ -145,6 +145,7 @@
             background-color: #eee;
             border-radius: 4px;
             overflow: hidden;
+            margin-top: 5px;
         }
 
         #progress-fill {
@@ -169,8 +170,8 @@
             max-width: 300px;
             margin: 30px auto 10px auto;
             padding: 15px 20px;
-            background-color: #032e30; /* Fundo verde escuro */
-            color: #ffffff; /* Letra branca para dar contraste */
+            background-color: #032e30;
+            color: #ffffff;
             border: none;
             border-radius: 8px;
             font-size: 1rem;
@@ -182,26 +183,12 @@
         }
 
         .btn-reiniciar:hover {
-            background-color: #054a4d; /* Tom mais escuro para o hover */
+            background-color: #054a4d;
         }
 
         .btn-reiniciar:active {
             transform: translateY(2px);
             box-shadow: 0 2px 3px rgba(0,0,0,0.1);
-        }
-
-        /* Estilo da Mascote (Antônia) */
-        .mascote-container {
-            text-align: center;
-            position: relative;
-            z-index: 110;
-        }
-
-        .mascote-img {
-            width: 120px;
-            display: block; /* Mata o espaço fantasma do navegador */
-            margin: 0 auto; /* Mantém bem centralizada */
-            transform: translateY(28px); /* Empurra por cima da barra */
         }
     </style>
 </head>
@@ -215,11 +202,6 @@
 
     <div class="progress-container">
         <div class="progress-text">Progresso do Treinamento: <span id="percent">0%</span></div>
-        
-        <div class="mascote-container">
-            <img src="imagem-antonia.png" alt="Mascote Antônia" class="mascote-img">
-        </div>
-
         <div class="progress-bar">
             <div id="progress-fill"></div>
         </div>
@@ -318,7 +300,6 @@
         percentText.innerText = percentage + "%";
     }
 
-    // Carregar dados salvos e aplicar eventos
     checkboxes.forEach((checkbox, index) => {
         const saved = localStorage.getItem('assistencia-item-' + index);
         if (saved === 'true') {
@@ -331,7 +312,6 @@
         });
     });
 
-    // Função do botão de reiniciar restaurada com sucesso
     const btnReiniciar = document.getElementById('btn-reiniciar');
     
     btnReiniciar.addEventListener('click', () => {
@@ -339,17 +319,14 @@
         
         if (confirmacao) {
             checkboxes.forEach((checkbox, index) => {
-                checkbox.checked = false; // Desmarca visualmente
-                localStorage.setItem('assistencia-item-' + index, 'false'); // Limpa da memória do navegador
+                checkbox.checked = false;
+                localStorage.setItem('assistencia-item-' + index, 'false');
             });
-            updateProgress(); // Atualiza a barra para 0%
-            
-            // Joga a tela suavemente para cima
+            updateProgress();
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     });
 
-    // Inicializar progresso na carga da página
     updateProgress();
 </script>
 
