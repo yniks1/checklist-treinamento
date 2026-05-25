@@ -15,7 +15,7 @@
 
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #cce2fc; /* Cor alterada para o azul claro da imagem */
+            background-color: #cce2fc; /* Azul claro restaurado */
             color: var(--cinza-texto);
             margin: 0;
             padding: 20px;
@@ -155,10 +155,53 @@
         }
 
         .progress-text {
+            text-align: center;
             font-size: 0.8rem;
             margin-bottom: 5px;
             color: var(--verde-escuro);
             font-weight: bold;
+        }
+
+        /* Estilo do Botão de Reiniciar */
+        .btn-reiniciar {
+            display: block;
+            width: 100%;
+            max-width: 300px;
+            margin: 30px auto 10px auto;
+            padding: 15px 20px;
+            background-color: #032e30; /* Fundo verde escuro */
+            color: #ffffff; /* Letra branca para dar contraste */
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            text-transform: uppercase;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn-reiniciar:hover {
+            background-color: #054a4d; /* Tom mais escuro para o hover */
+        }
+
+        .btn-reiniciar:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+
+        /* Estilo da Mascote (Antônia) */
+        .mascote-container {
+            text-align: center;
+            position: relative;
+            z-index: 110;
+        }
+
+        .mascote-img {
+            width: 120px;
+            display: block; /* Mata o espaço fantasma do navegador */
+            margin: 0 auto; /* Mantém bem centralizada */
+            transform: translateY(28px); /* Empurra por cima da barra */
         }
     </style>
 </head>
@@ -172,6 +215,11 @@
 
     <div class="progress-container">
         <div class="progress-text">Progresso do Treinamento: <span id="percent">0%</span></div>
+        
+        <div class="mascote-container">
+            <img src="imagem-antonia.png" alt="Mascote Antônia" class="mascote-img">
+        </div>
+
         <div class="progress-bar">
             <div id="progress-fill"></div>
         </div>
@@ -180,9 +228,9 @@
     <div class="content">
         <div class="categoria">
             <div class="categoria-titulo">Conceitos Iniciais</div>
-            <div class="item-lista"><input type="checkbox" id="item1"><label for="item1">O que é uma assistência 24 horas?</label></div>
-            <div class="item-lista"><input type="checkbox" id="item2"><label for="item2">O que são associações?</label></div>
-            <div class="item-lista"><input type="checkbox" id="item3"><label for="item3">O que são prestadores de serviços?</label></div>
+            <div class="item-lista"><input type="checkbox" id="item1"><label for="item1">O que é uma assistência 24 horas</label></div>
+            <div class="item-lista"><input type="checkbox" id="item2"><label for="item2">O que são associações</label></div>
+            <div class="item-lista"><input type="checkbox" id="item3"><label for="item3">O que são prestadores de serviços</label></div>
         </div>
 
         <div class="categoria">
@@ -247,11 +295,12 @@
             <div class="item-lista"><input type="checkbox" id="item41"><label for="item41">Cancelamento de serviços</label></div>
             <div class="item-lista"><input type="checkbox" id="item42"><label for="item42">Equipamento: Patins e Carro de apoio</label></div>
             <div class="item-lista"><input type="checkbox" id="item43"><label for="item43">Tipos: Asa Delta, Plataforma, Lança e Munck</label></div>
+            <button id="btn-reiniciar" class="btn-reiniciar">Zerar Treinamento</button>
         </div>
     </div>
 
     <footer>
-        Criado por Yago Willian | Setor de Qualidade
+        Desenvolvido por Yago Willian | Setor de Qualidade
     </footer>
 </div>
 
@@ -280,6 +329,24 @@
             localStorage.setItem('assistencia-item-' + index, checkbox.checked);
             updateProgress();
         });
+    });
+
+    // Função do botão de reiniciar restaurada com sucesso
+    const btnReiniciar = document.getElementById('btn-reiniciar');
+    
+    btnReiniciar.addEventListener('click', () => {
+        const confirmacao = confirm("Tem certeza que deseja zerar todo o checklist do treinamento?");
+        
+        if (confirmacao) {
+            checkboxes.forEach((checkbox, index) => {
+                checkbox.checked = false; // Desmarca visualmente
+                localStorage.setItem('assistencia-item-' + index, 'false'); // Limpa da memória do navegador
+            });
+            updateProgress(); // Atualiza a barra para 0%
+            
+            // Joga a tela suavemente para cima
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
     });
 
     // Inicializar progresso na carga da página
